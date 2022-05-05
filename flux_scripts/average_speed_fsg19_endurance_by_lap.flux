@@ -1,0 +1,8 @@
+from(bucket: "PlayBucket")
+  |> range(start: 2019-08-11T14:00:00.000Z, stop: 2019-08-11T15:00:00.000Z)
+  |> filter(fn: (r) => r["log"] == "FSG Endurance 2019")
+  |> filter(fn: (r) => r["_measurement"] == "vcu.INS")
+  |> filter(fn: (r) => r["_field"] == "vx")
+  |> group(columns: ["lap"], mode: "by")
+  |> mean(column: "_value")
+  |> drop(columns: ["result", "table", "_start", "_stop"])
